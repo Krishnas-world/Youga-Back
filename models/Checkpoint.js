@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import AngleSchema from './Angle.js';
+
 
 const CheckpointSchema = new mongoose.Schema({
   pose_name: {
@@ -12,7 +12,7 @@ const CheckpointSchema = new mongoose.Schema({
   },
   angles: {
     type: Map,
-    of: AngleSchema,
+    of: { angle: Number, threshold: Number },
     required: true,
   },
 });

@@ -1,10 +1,24 @@
 import express from 'express';
-import multer from 'multer';
+import dotenv from 'dotenv';
+import connectDB from './config/db.js';
+import poseRoutes from './routes/poseRoutes.js';
 
-const multerParse = multer({ dest: 'uploads/' });
-
-
+dotenv.config();
+console.log('Bunny Storage URL:', process.env.BUNNY_STORAGE_URL);
+console.log('Bunny Storage Zone:', process.env.BUNNY_STORAGE_ZONE);
+console.log('Bunny Access Key:', process.env.BUNNY_ACCESS_KEY);
 
 
 const app = express();
-app.listen(3000, ()=>{console.log('Server is running on port 3000')});
+
+// Middleware
+app.use(express.json());
+
+// Connect to Database
+connectDB();
+
+// Routes
+app.use('/api/poses', poseRoutes);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
